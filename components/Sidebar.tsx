@@ -37,7 +37,7 @@ const Sidebar = () => {
                             <p className="text-gray-400">Log in to like and comment</p>
                             <div className="pr-4">
                                 <GoogleLogin
-                                    clientId=""
+                                    clientId="dsaaaaaaaaaaaaa"
                                     render={(renderProps) => {
                                         <button
                                             className="bg-white text-lg text-[#F51997] border-[1px] border-[#F51997] font-semibold px-6 py-3 rounded-md outline-none w-full mt-3 hover:text-white hover:bg-[#F51997] cursor-pointer"
