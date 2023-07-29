@@ -9,6 +9,7 @@ import useAuthStore from '../store/authStore';
 import { client } from '../utils/client';
 import { topics } from '../utils/constants';
 import { type } from 'os';
+import { BASE_URL } from '../utils';
 
 const Upload = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +64,7 @@ const Upload = () => {
                 topic: category,
             };
 
-            await axios.post(`http://localhost:3000/api/post`, document);
+            await axios.post(`${BASE_URL}/api/post`, document);
             router.push('/');
         }
     };
@@ -74,7 +75,7 @@ const Upload = () => {
                 <div>
                     <div>
                         <p className="text-2xl font-bold">Upload Video</p>
-                        <p className="text-md text-gray-400">Post a video to your account</p>
+                        <p className="text-gray-400 text-md">Post a video to your account</p>
                     </div>
                     <div className="border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-[260px] h-[460px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100">
                         {isLoading ? (
@@ -94,12 +95,12 @@ const Upload = () => {
                                     <label className="cursor-pointer">
                                         <div className="flex flex-col items-center justify-center h-full">
                                             <div className="flex flex-col items-center justify-center">
-                                                <p className="font-bold text-xl">
-                                                    <FaCloudUploadAlt className="text-gray-300 text-6xl" />
+                                                <p className="text-xl font-bold">
+                                                    <FaCloudUploadAlt className="text-6xl text-gray-300" />
                                                 </p>
                                                 <p className="text-xl font-semibold">Upload Video</p>
                                             </div>
-                                            <p className="text-gray-400 text-center mt-10 text-sm leading-10">
+                                            <p className="mt-10 text-sm leading-10 text-center text-gray-400">
                                                 MP4 or WebM or ogg <br />
                                                 720x1280 or higher <br />
                                                 Up to 10 minutes <br />
@@ -128,23 +129,23 @@ const Upload = () => {
                 </div>
 
                 <div className="flex flex-col gap-3 pb-10">
-                    <label className="text-md font-medium">Caption</label>
+                    <label className="font-medium text-md">Caption</label>
                     <input
                         type="text"
                         value={caption}
                         onChange={(e) => setCaption(e.target.value)}
-                        className="p-2 rounded outline-none text-md border-2 border-gray-200"
+                        className="p-2 border-2 border-gray-200 rounded outline-none text-md"
                     />
-                    <label className="text-md font-medium">Choose a Category</label>
+                    <label className="font-medium text-md">Choose a Category</label>
                     <select
                         onChange={(e) => setCategory(e.target.value)}
-                        className="outline-none border-2 border-gray-200 text-md capitalize lg:p-2 p-2 rounded cursor-pointer"
+                        className="p-2 capitalize border-2 border-gray-200 rounded outline-none cursor-pointer text-md lg:p-2"
                     >
                         {topics.map((topic) => (
                             <option
                                 key={topic.name}
                                 value={topic.name}
-                                className="outline-none capitalize bg-white text-gray-700 text-md p-2 hover:bg-slate-300"
+                                className="p-2 text-gray-700 capitalize bg-white outline-none text-md hover:bg-slate-300"
                             >
                                 {topic.name}
                             </option>
@@ -154,7 +155,7 @@ const Upload = () => {
                         <button
                             onClick={() => {}}
                             type="button"
-                            className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
+                            className="p-2 font-medium border-2 border-gray-300 rounded outline-none text-md w-28 lg:w-44"
                         >
                             Discard
                         </button>

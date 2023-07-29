@@ -17,19 +17,5 @@ export const createOrGetUser = async (response: any, addUser: any) => {
 
     addUser(user);
 
-    await axios.post(`http://localhost:3000/api/auth`, user);
+    await axios.post(`${BASE_URL}/api/auth`, user);
 };
-
-// const { name, picture, sub } = JSON.parse(jsonPayload)
-
-// const user = {
-//   _id: sub,
-//   _type: 'user',
-//   userName: name,
-//   image: picture,
-// };
-
-// addUser(user);
-
-// await axios.post(`${BASE_URL}/api/auth`, user);
-// };
