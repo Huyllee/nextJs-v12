@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
@@ -16,6 +16,12 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
     const [playing, setPlaying] = useState(false);
     const [isVideoMuted, setIsVideoMuted] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        if (videoRef?.current) {
+            videoRef.current.muted = isVideoMuted;
+        }
+    }, [isVideoMuted]);
 
     const onVideoPress = () => {
         if (playing) {
