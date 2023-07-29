@@ -3,7 +3,7 @@ const nextConfig = {
     reactStrictMode: true,
     swcMinify: true,
     images: {
-        domains: ['p16-sign-va.tiktokcdn.com'],
+        domains: ['p16-sign-va.tiktokcdn.com', 'lh3.googleusercontent.com'],
     },
 };
 
