@@ -6,8 +6,13 @@ import { GoVerified } from 'react-icons/go';
 import useAuthStore from '../store/authStore';
 import { IUser } from '../types';
 
-const SuggestedAccount = () => {
-    const { fetchAllUsers, allUsers } = useAuthStore();
+interface IProps {
+    fetchAllUsers: () => void;
+    allUsers: IUser[];
+}
+
+const SuggestedAccount = ({ fetchAllUsers, allUsers }: IProps) => {
+    const slicedUsers = allUsers.slice(0, 6);
 
     useEffect(() => {
         fetchAllUsers();
@@ -18,22 +23,22 @@ const SuggestedAccount = () => {
             <p className="text-gray-500 font-semibold m-3 mt-4 hidden xl:block">Suggested Accounts</p>
 
             <div>
-                {allUsers.slice(0, 6).map((user: IUser) => (
+                {slicedUsers.map((user: IUser) => (
                     <Link href={`/profile/${user._id}`} key={user._id}>
                         <div className="flex gap-3 hover:bg-primary p-2 cursor-pointer font-semibold rounded">
                             <div className="w-8 h-8">
                                 <Image
-                                    className="rounded-full"
-                                    src={user.image}
                                     width={34}
                                     height={34}
+                                    className="rounded-full"
+                                    src={user.image}
                                     alt="user-profile"
                                     layout="responsive"
                                 />
                             </div>
 
                             <div className="hidden xl:block">
-                                <p className="flex gap-1 font-bold text-primary lowercase text-md items-center">
+                                <p className="flex gap-1 items-center text-md font-bold text-primary lowercase">
                                     {user.userName} {''}
                                     <GoVerified className="text-blue-400" />
                                 </p>
