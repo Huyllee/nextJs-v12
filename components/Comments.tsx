@@ -5,6 +5,7 @@ import { GoVerified } from 'react-icons/go';
 
 import useAuthStore from '../store/authStore';
 import NoResults from './NoResults';
+import { IUser } from '../types';
 
 interface IProps {
     isPostingComment: boolean;
@@ -25,12 +26,56 @@ interface IComment {
 }
 
 const Comments = ({ comment, setComment, addComment, comments, isPostingComment }: IProps) => {
-    const { userProfile } = useAuthStore();
+    const { userProfile, allUsers } = useAuthStore();
 
     return (
         <div className="border-t-2 border-gray-200 pt-4 px-10 bg-[#F8F8F8] border-b-2 lg:pb-0 pb-[100px]">
             <div className="overflow-scroll lg:h-[475px]">
-                {comments?.length ? <div>videos</div> : <NoResults text="No comments yet!" />}
+                {comments?.length ? (
+                    comments.map((item, index) => (
+                        <>
+                            {allUsers?.map(
+                                (user: IUser) =>
+                                    user._id === (item.postedBy._id || item.postedBy._ref) && (
+                                        <div className="p-2 items-center" key={index}>
+                                            <Link href={`/profile/${user._id}`}>
+                                                <div className="flex gap-3 hover:bg-primary p-2 cursor-pointer font-semibold rounded">
+                                                    <div className="flex items-start gap-3">
+                                                        <div className="w-8 h-8">
+                                                            <Image
+                                                                className="rounded-full"
+                                                                src={user.image}
+                                                                width={34}
+                                                                height={34}
+                                                                alt={user.userName}
+                                                                layout="responsive"
+                                                            />
+                                                        </div>
+
+                                                        <div className="hidden xl:block">
+                                                            <p className="flex gap-1 font-bold text-primary lowercase text-md items-center">
+                                                                {user.userName} {''}
+                                                                <GoVerified className="text-blue-400" />
+                                                            </p>
+                                                            <p className="capitalize text-gray-400 text-xs">
+                                                                {user.userName}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Link>
+
+                                            <div>
+                                                <p>{comment}</p>
+                                            </div>
+                                        </div>
+                                    ),
+                            )}
+                        </>
+                    ))
+                ) : (
+                    <NoResults text="No comments yet!" />
+                )}
             </div>
 
             {userProfile && (
