@@ -22,7 +22,7 @@ const Detail = ({ postDetails }: IProps) => {
     const [playing, setPlaying] = useState(false);
     const [isVideoMuted, setIsVideoMuted] = useState(false);
 
-    const { userProfile } = useAuthStore();
+    const { userProfile }: any = useAuthStore();
 
     const router = useRouter();
 
@@ -43,6 +43,17 @@ const Detail = ({ postDetails }: IProps) => {
         } else {
             videoRef.current.play();
             setPlaying(true);
+        }
+    };
+
+    const handleLike = async (like: boolean) => {
+        if (userProfile) {
+            const { data } = await axios.put(`${BASE_URL}/api/like`, {
+                userId: userProfile._id,
+                postId: post._id,
+                like,
+            });
+            setPost({ ...post, likes: data.likes });
         }
     };
 
@@ -123,7 +134,15 @@ const Detail = ({ postDetails }: IProps) => {
 
                     <p className="px-5 text-lg text-gray-600">{post.caption}</p>
 
-                    <div className="px-10 mt-10">{userProfile && <LikeButton />}</div>
+                    <div className="px-10 mt-10">
+                        {userProfile && (
+                            <LikeButton
+                                likes={post.likes}
+                                handleLike={() => handleLike(true)}
+                                handleDislike={() => handleLike(false)}
+                            />
+                        )}
+                    </div>
 
                     <Comments />
                 </div>
